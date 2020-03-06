@@ -17,16 +17,21 @@ public class Player {
   }
 
   public void engage(Player player) {
-    long hitsToFinishOponent = player.hitPoints/this.weaponHitPoints;
-    long hitsToTakeFromOponent = this.hitPoints/player.weaponHitPoints;
+    while(this.hitPoints > 0 && player.hitPoints>0){
+      long playerHitpoints = player.hitPoints - this.weaponHitPoints;
+      if(playerHitpoints <= 0){
+        player.hitPoints = 0;
+        break;
+      }
+      player.hitPoints = playerHitpoints;
 
-    if(hitsToFinishOponent > hitsToTakeFromOponent){
-      this.setHitPoints(0);
-      //Added 1 hit because of the player who started the engagement
-      player.setHitPoints(player.hitPoints - ((hitsToTakeFromOponent+1)*this.weaponHitPoints));
-    } else if(hitsToFinishOponent < hitsToTakeFromOponent){
-      player.setHitPoints(0);
-      this.setHitPoints(this.hitPoints - (hitsToFinishOponent*player.hitPoints));
+      long currentHitPoints = this.hitPoints - player.weaponHitPoints;
+      if(currentHitPoints <= 0){
+        this.hitPoints = 0;
+        break;
+      }
+      this.hitPoints = currentHitPoints;
+
     }
   }
 
