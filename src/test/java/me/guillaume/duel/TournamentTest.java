@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * there's no such thing as negative hit points, when you reach 0, you are dead, combat stops.
  *
  */
-public class duelTest {
+public class TournamentTest {
 
 
     /**
