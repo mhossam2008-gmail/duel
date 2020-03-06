@@ -40,27 +40,7 @@ public abstract class Player {
       }
     }
   }
-//
-//  public void engageWithBonus(Player player,Long bonus) {
-//    while(this.hitPoints > 0 && player.hitPoints>0){
-//      boolean playerHasBuckler = player.useBuckler(this.weapon);
-//      if(!playerHasBuckler){
-//        player.takeDamageWithBonus(this , bonus);
-//        if(player.hitPoints <= 0){
-//          player.hitPoints = 0;
-//          break;
-//        }
-//      }
-//      boolean hasBuckler = useBuckler(player.weapon);
-//      if(!hasBuckler) {
-//        this.takeDamageWithBonus(player,bonus);
-//        if(this.hitPoints <= 0){
-//          this.hitPoints = 0;
-//          break;
-//        }
-//      }
-//    }
-//  }
+
 
   private boolean useBuckler(Weapon weapon) {
     if(equipments!=null && equipments.get(BUCKLER_KEY)!=null && equipments.get(BUCKLER_KEY) > 0){
