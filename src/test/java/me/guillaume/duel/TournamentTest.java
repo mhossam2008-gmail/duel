@@ -84,7 +84,7 @@ public class TournamentTest {
      * once Berserk, he doubles his damages.
      */
     @Test
-    @Ignore // bonus points when all the rest is neat and tidy
+//    @Ignore // bonus points when all the rest is neat and tidy
     public void ViciousSwordsmanVsVeteranHighlander() {
 
         Swordsman swordsman = new Swordsman("Vicious")

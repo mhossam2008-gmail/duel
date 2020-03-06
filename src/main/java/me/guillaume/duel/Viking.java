@@ -10,4 +10,9 @@ public class Viking extends Player{
   public Viking equip(String equipment) {
     return (Viking) super.equip(equipment);
   }
+
+  @Override
+  public void attack(Player player) {
+    player.takeDamage(this);
+  }
 }

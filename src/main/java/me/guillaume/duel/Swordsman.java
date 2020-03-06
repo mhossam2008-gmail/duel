@@ -26,12 +26,12 @@ public class Swordsman extends Player{
   }
 
   @Override
-  public void engage(Player player) {
+  public void attack(Player player) {
     if(vicious && viscousHits > 0){
       viscousHits--;
-//      super.engageWithBonus(player, 20L);
+      player.takeDamageWithBonus(this, 20L);
     }else{
-      super.engage(player);
+      player.takeDamage(this);
     }
   }
 }

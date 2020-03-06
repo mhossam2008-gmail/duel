@@ -2,7 +2,7 @@ package me.guillaume.duel;
 
 import java.util.HashMap;
 
-public class Player {
+public abstract class Player {
   public String name = "";
   private static final Integer DEFAULT_BUCKLER_COUNT = 3;
   private long hitPoints;
@@ -24,7 +24,7 @@ public class Player {
     while(this.hitPoints > 0 && player.hitPoints > 0){
       boolean playerHasBuckler = player.useBuckler(this.weapon);
       if(!playerHasBuckler){
-        player.takeDamage(this);
+        this.attack(player);
         if(player.hitPoints <= 0){
           player.hitPoints = 0;
           break;
@@ -32,7 +32,7 @@ public class Player {
       }
       boolean hasBuckler = useBuckler(player.weapon);
       if(!hasBuckler) {
-        this.takeDamage(player);
+        player.attack(this);
         if(this.hitPoints <= 0){
           this.hitPoints = 0;
           break;
@@ -40,7 +40,7 @@ public class Player {
       }
     }
   }
-
+//
 //  public void engageWithBonus(Player player,Long bonus) {
 //    while(this.hitPoints > 0 && player.hitPoints>0){
 //      boolean playerHasBuckler = player.useBuckler(this.weapon);
@@ -71,7 +71,7 @@ public class Player {
       if(weapon.equals(Weapon.AXE)) {
         equipments.put(BUCKLER_KEY, equipments.get(BUCKLER_KEY) - 1);
       }
-      System.out.println(name+" has used buckler");
+//      System.out.println(name+" has used buckler");
       bucklerUsedLastHit = true;
       return true;
     }
@@ -91,6 +91,15 @@ public class Player {
       case ARMOR_KEY :
         equipments.put(ARMOR_KEY, 1);
         break;
+      case "axe":
+        weapon = Weapon.AXE;
+        break;
+      case "sword":
+        weapon = Weapon.SWORD;
+        break;
+      case "great sword":
+        weapon = Weapon.GREAT_SWORD;
+        break;
     }
     return this;
   }
@@ -108,14 +117,14 @@ public class Player {
       int refundedPoints = 0;
       if(isArmored()){
         refundedPoints += 3;
-        System.out.println("Armore added three points");
+//        System.out.println("Armor added three points");
       }
       if(player.isArmored()){
         refundedPoints+=1;
-        System.out.println("Armore reduced damage by 1 point");
+//        System.out.println("Armor reduced damage by 1 point");
       }
       this.hitPoints = this.hitPoints - player.weapon.getHitpoints() + refundedPoints;
-      System.out.println(name+" has recieved "+(player.weapon.getHitpoints() - refundedPoints)+" damage , hitpoints now :"+this.hitPoints);
+//      System.out.println(name+" has recieved "+(player.weapon.getHitpoints() - refundedPoints)+" damage , hitpoints now :"+this.hitPoints);
     }
   }
 
@@ -123,19 +132,19 @@ public class Player {
     return equipments!=null && equipments.get(ARMOR_KEY) > 0;
   }
 
-//  public void takeDamageWithBonus(Player player , Long bonus){
-//    if(player.shouldHit()){
-//      int refundedPoints = 0;
-//      if(isArmored()){
-//        refundedPoints += 3;
-//      }
-//      if(player.isArmored()){
-//        refundedPoints+=1;
-//      }
-//      this.hitPoints = this.hitPoints - player.weapon.getHitpoints() + refundedPoints;
-//      this.hitPoints = this.hitPoints - bonus;
-//    }
-//  }
+  public void takeDamageWithBonus(Player player , Long bonus){
+    if(player.shouldHit()){
+      int refundedPoints = 0;
+      if(isArmored()){
+        refundedPoints += 3;
+      }
+      if(player.isArmored()){
+        refundedPoints+=1;
+      }
+      this.hitPoints = this.hitPoints - player.weapon.getHitpoints() + refundedPoints;
+      this.hitPoints = this.hitPoints - bonus;
+    }
+  }
 
   private boolean shouldHit(){
     if(weapon.getHitsToSkip()<0) {
@@ -153,4 +162,6 @@ public class Player {
       return true;
     }
   }
+
+  public abstract void attack(Player player);
 }
