@@ -7,4 +7,8 @@ public class Highlander extends Player{
   public Highlander() {
 
   }
+
+  public Highlander equip(String equipment){
+    return (Highlander) super.equip(equipment);
+  }
 }
