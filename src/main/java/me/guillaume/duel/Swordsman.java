@@ -4,12 +4,12 @@ public class Swordsman extends Player{
 
   public Swordsman(String vicious) {
     super();
-    setWeaponHitPoints(5);
+    setWeapon(Weapon.SWORD);;
     setHitPoints(100);
   }
 
   public Swordsman() {
-    setWeaponHitPoints(5);
+    setWeapon(Weapon.SWORD);
     setHitPoints(100);
   }
 

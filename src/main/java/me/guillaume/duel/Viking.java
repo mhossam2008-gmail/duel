@@ -3,7 +3,7 @@ package me.guillaume.duel;
 public class Viking extends Player{
 
   public Viking(){
-    setWeaponHitPoints(6);
+    setWeapon(Weapon.AXE);
     setHitPoints(120);
   }
 
