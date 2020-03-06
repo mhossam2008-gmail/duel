@@ -115,7 +115,6 @@ public abstract class Player {
   }
 
   public void takeDamageWithBonus(Player player , Long bonus){
-    if(player.shouldHit()){
       int refundedPoints = 0;
       if(isArmored()){
         refundedPoints += 3;
@@ -123,9 +122,7 @@ public abstract class Player {
       if(player.isArmored()){
         refundedPoints+=1;
       }
-      this.hitPoints = this.hitPoints - player.weapon.getHitpoints() + refundedPoints;
-      this.hitPoints = this.hitPoints - bonus;
-    }
+      this.hitPoints = (this.hitPoints - bonus - player.weapon.getHitpoints() + refundedPoints);
   }
 
   private boolean shouldHit(){
@@ -134,13 +131,16 @@ public abstract class Player {
     }
     if(consecutiveHits < weapon.getConsecutiveHits()){
       consecutiveHits++;
+//      System.out.println("Attack");
       return true;
     }else if(restingHits < weapon.getHitsToSkip()){
       restingHits++;
+//      System.out.println("Rest");
       return false;
     }else{
       consecutiveHits = 1;
       restingHits = 0 ;
+//      System.out.println("Attack");
       return true;
     }
   }

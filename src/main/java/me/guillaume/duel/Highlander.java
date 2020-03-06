@@ -2,12 +2,13 @@ package me.guillaume.duel;
 
 public class Highlander extends Player{
   private boolean isVeteran = false;
+  private final String VETERAN_KEY = "Veteran";
   public Highlander(String veteran) {
     super();
     setHitPoints(150l);
     setWeapon(Weapon.GREAT_SWORD);
     this.name="Highlander";
-    if(veteran.equals("Veteran")){
+    if(VETERAN_KEY.equals(veteran)){
       isVeteran = true;
     }
   }
@@ -30,6 +31,5 @@ public class Highlander extends Player{
     }else{
       player.takeDamage(this);
     }
-
   }
 }
