@@ -22,20 +22,24 @@ public abstract class Player {
 
   public void engage(Player player) {
     while(this.hitPoints > 0 && player.hitPoints > 0){
-      boolean playerHasBuckler = player.useBuckler(this.weapon);
-      if(!playerHasBuckler){
-        this.attack(player);
-        if(player.hitPoints <= 0){
-          player.hitPoints = 0;
-          break;
+      if(shouldHit()) {
+        boolean playerHasBuckler = player.useBuckler(this.weapon);
+        if(!playerHasBuckler){
+          this.attack(player);
+          if(player.hitPoints <= 0){
+            player.hitPoints = 0;
+            break;
+          }
         }
       }
-      boolean hasBuckler = useBuckler(player.weapon);
-      if(!hasBuckler) {
-        player.attack(this);
-        if(this.hitPoints <= 0){
-          this.hitPoints = 0;
-          break;
+      if(player.shouldHit()){
+        boolean hasBuckler = useBuckler(player.weapon);
+        if(!hasBuckler) {
+          player.attack(this);
+          if(this.hitPoints <= 0){
+            this.hitPoints = 0;
+            break;
+          }
         }
       }
     }
@@ -93,7 +97,6 @@ public abstract class Player {
   }
 
   public void takeDamage(Player player){
-    if(player.shouldHit()){
       int refundedPoints = 0;
       if(isArmored()){
         refundedPoints += 3;
@@ -103,9 +106,8 @@ public abstract class Player {
         refundedPoints+=1;
 //        System.out.println("Armor reduced damage by 1 point");
       }
-      this.hitPoints = this.hitPoints - player.weapon.getHitpoints() + refundedPoints;
+      this.hitPoints = Math.max(0, this.hitPoints - player.weapon.getHitpoints() + refundedPoints);
 //      System.out.println(name+" has recieved "+(player.weapon.getHitpoints() - refundedPoints)+" damage , hitpoints now :"+this.hitPoints);
-    }
   }
 
   private boolean isArmored() {
